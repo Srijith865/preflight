@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PreFlight — Initializing Test Environment #8492</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#ffffff",
+            "outline": "#7e7576",
+            "surface-bright": "#f9f9ff",
+            "surface-variant": "#dce2f3",
+            "surface-container-low": "#f0f3ff",
+            "on-tertiary-fixed-variant": "#474747",
+            "surface": "#f9f9ff",
+            "surface-container": "#e7eefe",
+            "on-primary-fixed": "#1b1b1b",
+            "primary": "#000000",
+            "on-background": "#151c27",
+            "on-primary-container": "#848484",
+            "tertiary-fixed-dim": "#c6c6c6",
+            "background": "#f9f9ff",
+            "error": "#ba1a1a",
+            "secondary-fixed": "#dce2f7",
+            "on-tertiary-container": "#848484",
+            "secondary": "#575e70",
+            "primary-fixed": "#e2e2e2",
+            "tertiary-fixed": "#e2e2e2",
+            "error-container": "#ffdad6",
+            "inverse-surface": "#2a313d",
+            "inverse-on-surface": "#ebf1ff",
+            "tertiary": "#000000",
+            "surface-container-highest": "#dce2f3",
+            "tertiary-container": "#1b1b1b",
+            "inverse-primary": "#c6c6c6",
+            "on-primary-fixed-variant": "#474747",
+            "on-tertiary": "#ffffff",
+            "on-surface": "#151c27",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed-variant": "#404758",
+            "secondary-fixed-dim": "#c0c6db",
+            "surface-dim": "#d3daea",
+            "outline-variant": "#cfc4c5",
+            "on-error": "#ffffff",
+            "on-secondary-fixed": "#141b2b",
+            "on-error-container": "#93000a",
+            "on-secondary-container": "#5c6274",
+            "on-primary": "#ffffff",
+            "primary-container": "#1b1b1b",
+            "surface-container-high": "#e2e8f8",
+            "secondary-container": "#d9dff5",
+            "on-surface-variant": "#4c4546",
+            "surface-tint": "#5e5e5e",
+            "primary-fixed-dim": "#c6c6c6",
+            "on-tertiary-fixed": "#1b1b1b"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "gutter": "1rem",
+            "space-xl": "2rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "0.75rem",
+            "margin": "1.5rem",
+            "space-lg": "1.25rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-xl": ["Inter"],
+            "body-sm": ["Inter"],
+            "code-sm": ["JetBrains Mono"],
+            "body-md": ["Inter"]
+          },
+          "fontSize": {
+            "body-lg": ["15px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "code-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 16px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    @keyframes spin-slow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .animate-spin-custom {
+      animation: spin-slow 1.2s linear infinite;
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-primary antialiased min-h-screen flex flex-col font-body-md text-body-md selection:bg-primary selection:text-surface-container-lowest">
+<!-- TOP NAV BAR (Shared Component) -->
+<header class="w-full h-12 px-space-xl flex items-center justify-between border-b border-outline-variant bg-surface-container-lowest docked full-width top-0 sticky z-40">
+<div class="flex items-center gap-6">
+<!-- Brand Logo -->
+<a class="text-headline-sm font-headline-sm tracking-tight font-semibold text-primary flex items-center gap-2" href="#">
+<span class="w-4 h-4 bg-primary inline-flex items-center justify-center text-surface-container-lowest font-code-sm text-label-sm">▲</span>
+<span>PreFlight</span>
+</a>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-6 text-label-md font-label-md h-12">
+<!-- Dashboard (Active) -->
+<a class="text-primary font-medium border-b-2 border-primary pb-3.5 pt-3.5" href="#">Dashboard</a>
+<!-- Docs (Inactive) -->
+<a class="text-secondary hover:text-primary pb-3.5 pt-3.5 transition-colors" href="#">Docs</a>
+<!-- Settings (Inactive) -->
+<a class="text-secondary hover:text-primary pb-3.5 pt-3.5 transition-colors" href="#">Settings</a>
+</nav>
+</div>
+<!-- Trailing Actions Cluster -->
+<div class="flex items-center gap-3">
+<!-- Status Badge -->
+<div class="hidden sm:flex items-center gap-1.5 px-2 py-0.5 border border-outline-variant rounded-lg text-label-sm font-label-sm text-secondary bg-surface-container-lowest">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-code-sm text-code-sm">Status: Online</span>
+</div>
+<!-- Icon Actions -->
+<button aria-label="Terminal" class="w-7 h-7 flex items-center justify-center border border-outline-variant rounded-lg text-secondary hover:text-primary hover:bg-surface-container-low transition-colors" title="Toggle Terminal">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button aria-label="Notifications" class="w-7 h-7 flex items-center justify-center border border-outline-variant rounded-lg text-secondary hover:text-primary hover:bg-surface-container-low transition-colors" title="Notifications">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<!-- Primary Action -->
+<button class="h-8 px-3 bg-primary text-surface-container-lowest rounded-lg font-label-md text-label-md hover:bg-primary-container active:scale-[0.99] transition-transform flex items-center gap-1.5">
+<span>Deploy Check</span>
+</button>
+<!-- Avatar Profile -->
+<div class="w-7 h-7 border border-outline-variant rounded-lg bg-surface-container-low flex items-center justify-center font-code-sm text-label-sm font-semibold text-primary">
+        PF
+      </div>
+</div>
+</header>
+<!-- WORKBENCH SUB-HEADER / META STRIP -->
+<section class="border-b border-outline-variant bg-surface-container-lowest px-space-xl py-3">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div class="space-y-1">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-secondary">
+<a class="hover:text-primary flex items-center gap-1 transition-colors font-code-sm text-code-sm" href="#">
+<span>← staging.preflight.run</span>
+</a>
+<span class="text-outline-variant">/</span>
+<span class="text-primary font-code-sm text-code-sm">Test Run #8492</span>
+</div>
+<!-- Main Title & Live Badge -->
+<div class="flex items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg tracking-tight text-primary">Initializing Test Environment</h1>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-primary text-surface-container-lowest text-label-sm font-label-sm font-code-sm uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-lowest animate-ping"></span>
+            STATUS: PROVISIONING AGENTS
+          </span>
+</div>
+</div>
+<!-- Execution Ticker & Linear Progress -->
+<div class="flex flex-col items-start md:items-end justify-center gap-1.5">
+<div class="text-label-sm font-label-sm font-code-sm text-secondary">
+          Stage 2 of 5 • Estimated 38s remaining • 10 concurrent peers
+        </div>
+<!-- Hairline Progress Bar -->
+<div class="w-full md:w-64 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary transition-all duration-500 ease-out" style="width: 40%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- MAIN CANVAS -->
+<main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- LEFT SIDEBAR: EXECUTION PIPELINE (4 Cols) -->
+<aside class="lg:col-span-4 flex flex-col gap-4">
+<!-- Stepper Box -->
+<div class="border border-outline-variant rounded-xl bg-surface-container-lowest p-4 flex flex-col gap-4 shadow-sm">
+<div class="flex items-center justify-between border-b border-outline-variant pb-3">
+<span class="font-headline-sm text-headline-sm text-primary">Execution Pipeline</span>
+<span class="font-code-sm text-label-sm text-secondary">BUILD_ID: 8492-AX</span>
+</div>
+<!-- Pipeline Stages -->
+<div class="space-y-4">
+<!-- Stage 1: Completed -->
+<div class="flex items-start gap-3 relative">
+<div class="w-5 h-5 rounded-full bg-primary text-surface-container-lowest flex items-center justify-center shrink-0 mt-0.5 z-10">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</div>
+<div class="flex-1 flex items-baseline justify-between">
+<div>
+<p class="font-label-md text-label-md font-semibold text-primary">Environment Ready</p>
+<p class="font-body-sm text-body-sm text-secondary">Container warm &amp; provisioned</p>
+</div>
+<span class="font-code-sm text-label-sm text-secondary">0.8s</span>
+</div>
+</div>
+<!-- Stage 2: ACTIVE -->
+<div class="flex items-start gap-3 relative pl-0">
+<div class="w-5 h-5 rounded-full border border-primary bg-surface-container-lowest text-primary flex items-center justify-center shrink-0 mt-0.5 z-10">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+</div>
+<div class="flex-1 bg-surface-container-low p-2 rounded-lg border-l-2 border-primary">
+<div class="flex items-baseline justify-between">
+<p class="font-label-md text-label-md font-semibold text-primary">Generating AI Users</p>
+<span class="font-code-sm text-label-sm text-primary animate-pulse">Running</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Synthesizing behavioral patterns...</p>
+</div>
+</div>
+<!-- Stage 3: Pending -->
+<div class="flex items-start gap-3 relative opacity-60">
+<div class="w-5 h-5 rounded-full border border-outline-variant bg-surface-container-lowest text-secondary flex items-center justify-center shrink-0 mt-0.5 z-10">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-secondary">Building Scenarios</p>
+<p class="font-body-sm text-body-sm text-outline">Action state graphs</p>
+</div>
+</div>
+<!-- Stage 4: Pending -->
+<div class="flex items-start gap-3 relative opacity-60">
+<div class="w-5 h-5 rounded-full border border-outline-variant bg-surface-container-lowest text-secondary flex items-center justify-center shrink-0 mt-0.5 z-10">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-secondary">Running Tests</p>
+<p class="font-body-sm text-body-sm text-outline">Headless Chrome cluster</p>
+</div>
+</div>
+<!-- Stage 5: Pending -->
+<div class="flex items-start gap-3 relative opacity-60">
+<div class="w-5 h-5 rounded-full border border-outline-variant bg-surface-container-lowest text-secondary flex items-center justify-center shrink-0 mt-0.5 z-10">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-secondary">Analysis &amp; Telemetry</p>
+<p class="font-body-sm text-body-sm text-outline">Assertions &amp; coverage matrix</p>
+</div>
+</div>
+</div>
+<!-- Target Meta Details -->
+<div class="border-t border-outline-variant pt-3 space-y-2 font-code-sm text-label-sm text-secondary">
+<div class="flex justify-between">
+<span>Target URL:</span>
+<span class="text-primary truncate max-w-[180px]">staging.preflight.run</span>
+</div>
+<div class="flex justify-between">
+<span>Viewport:</span>
+<span class="text-primary">Desktop + Mobile</span>
+</div>
+<div class="flex justify-between">
+<span>Target Flows:</span>
+<span class="text-primary">3 detected</span>
+</div>
+</div>
+<!-- Secondary Action: Cancel Run -->
+<button class="mt-2 w-full h-8 border border-outline-variant bg-surface-container-lowest text-primary rounded-lg font-label-md text-label-md hover:bg-surface-container-low hover:border-outline transition-colors flex items-center justify-center gap-2 active:scale-[0.99]">
+<span>Cancel Run</span>
+<kbd class="px-1.5 py-0.2 rounded border border-outline-variant font-code-sm text-[10px] text-secondary">ESC</kbd>
+</button>
+</div>
+<!-- Quick Tips Micro-Card -->
+<div class="border border-outline-variant rounded-xl p-3 bg-surface-container-low">
+<div class="flex items-center gap-1.5 text-label-sm font-label-sm font-semibold text-primary mb-1">
+<span class="material-symbols-outlined text-[14px]">info</span>
+<span>Deterministic Seed</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+          Generated user patterns are seeded with SHA-256 for 100% reproducible browser replays on failures.
+        </p>
+</div>
+</aside>
+<!-- RIGHT MAIN AREA: LIVE PERSONA STREAM (8 Cols) -->
+<section class="lg:col-span-8 flex flex-col gap-4">
+<!-- Section Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-outline-variant gap-2">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-primary">Generated AI Personas</h2>
+<span class="font-code-sm text-label-sm px-1.5 py-0.5 rounded border border-outline-variant bg-surface-container-low text-primary">4 synthesized</span>
+<span class="inline-block w-2 h-2 rounded-full bg-primary animate-ping" title="Synthesizing"></span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Autonomous synthetic testers tailored to your QA script</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm text-secondary font-code-sm">Grid View: 2×2</span>
+</div>
+</div>
+<!-- Persona Cards Bento Grid (2x2) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- PERSONA 1 -->
+<article class="border border-outline-variant rounded-xl p-4 bg-surface-container-lowest flex flex-col justify-between hover:border-primary transition-colors">
+<div>
+<div class="flex items-start justify-between gap-3 mb-3">
+<div class="flex items-center gap-3">
+<!-- Abstract Geometric Avatar -->
+<div class="w-8 h-8 rounded border border-primary bg-primary text-surface-container-lowest flex items-center justify-center font-code-sm text-label-md font-bold">
+                  //1
+                </div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Impatient Power User</h3>
+<span class="font-code-sm text-label-sm text-secondary">ID: USR_FAST_01</span>
+</div>
+</div>
+<!-- Status -->
+<span class="px-2 py-0.5 rounded-lg border border-outline-variant text-label-sm font-label-sm font-code-sm text-secondary bg-surface-container-low">
+                ● Ready
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mb-4">
+              Skips tooltips, tabs aggressively through input fields, spams rapid double-clicks on CTAs.
+            </p>
+</div>
+<div>
+<!-- Tags / Pills -->
+<div class="flex flex-wrap gap-1.5 pt-2 border-t border-outline-variant">
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Desktop</span>
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Latency: 45ms</span>
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Strict Mode</span>
+</div>
+<div class="mt-2 text-right">
+<span class="font-code-sm text-[11px] text-outline">Simulated: In sandbox</span>
+</div>
+</div>
+</article>
+<!-- PERSONA 2 -->
+<article class="border border-outline-variant rounded-xl p-4 bg-surface-container-lowest flex flex-col justify-between hover:border-primary transition-colors">
+<div>
+<div class="flex items-start justify-between gap-3 mb-3">
+<div class="flex items-center gap-3">
+<!-- Abstract Geometric Avatar -->
+<div class="w-8 h-8 rounded border border-outline-variant bg-surface-container-low text-primary flex items-center justify-center font-code-sm text-label-md font-bold">
+                  []2
+                </div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Hesitant First-Time Visitor</h3>
+<span class="font-code-sm text-label-sm text-secondary">ID: USR_HESITANT_02</span>
+</div>
+</div>
+<!-- Status -->
+<span class="px-2 py-0.5 rounded-lg border border-outline-variant text-label-sm font-label-sm font-code-sm text-secondary bg-surface-container-low">
+                ● Ready
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mb-4">
+              Lingers on pricing tiers, triggers mouseleave exit-intent modals, inspects security badges.
+            </p>
+</div>
+<div>
+<!-- Tags / Pills -->
+<div class="flex flex-wrap gap-1.5 pt-2 border-t border-outline-variant">
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Desktop (1440px)</span>
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Curious</span>
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Depth: High</span>
+</div>
+<div class="mt-2 text-right">
+<span class="font-code-sm text-[11px] text-outline">Simulated: In sandbox</span>
+</div>
+</div>
+</article>
+<!-- PERSONA 3 -->
+<article class="border border-outline-variant rounded-xl p-4 bg-surface-container-lowest flex flex-col justify-between hover:border-primary transition-colors">
+<div>
+<div class="flex items-start justify-between gap-3 mb-3">
+<div class="flex items-center gap-3">
+<!-- Abstract Geometric Avatar -->
+<div class="w-8 h-8 rounded border border-outline-variant bg-surface-container-low text-primary flex items-center justify-center font-code-sm text-label-md font-bold">
+                  &lt;&gt;3
+                </div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Mobile Edge-Case Explorer</h3>
+<span class="font-code-sm text-label-sm text-secondary">ID: USR_CHAOS_03</span>
+</div>
+</div>
+<!-- Status -->
+<span class="px-2 py-0.5 rounded-lg bg-surface-container-highest text-label-sm font-label-sm font-code-sm text-primary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+                Compiling...
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mb-4">
+              Interrupted network connections, rapid back navigation during OAuth redirection flows.
+            </p>
+</div>
+<div>
+<!-- Tags / Pills -->
+<div class="flex flex-wrap gap-1.5 pt-2 border-t border-outline-variant">
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Mobile (iOS)</span>
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Throttled 3G</span>
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Chaos Mode</span>
+</div>
+<div class="mt-2 text-right">
+<span class="font-code-sm text-[11px] text-outline">Simulated: Synthesizing telemetry</span>
+</div>
+</div>
+</article>
+<!-- PERSONA 4 -->
+<article class="border border-outline-variant rounded-xl p-4 bg-surface-container-lowest flex flex-col justify-between hover:border-primary transition-colors">
+<div>
+<div class="flex items-start justify-between gap-3 mb-3">
+<div class="flex items-center gap-3">
+<!-- Abstract Geometric Avatar -->
+<div class="w-8 h-8 rounded border border-outline-variant bg-surface-container-low text-primary flex items-center justify-center font-code-sm text-label-md font-bold">
+                  ##4
+                </div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Enterprise Security Auditor</h3>
+<span class="font-code-sm text-label-sm text-secondary">ID: USR_SEC_04</span>
+</div>
+</div>
+<!-- Status -->
+<span class="px-2 py-0.5 rounded-lg bg-surface-container-highest text-label-sm font-label-sm font-code-sm text-primary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+                Compiling...
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mb-4">
+              Attempts payload edge cases in company size field, inspects CORS headers on staging invite tokens.
+            </p>
+</div>
+<div>
+<!-- Tags / Pills -->
+<div class="flex flex-wrap gap-1.5 pt-2 border-t border-outline-variant">
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Desktop</span>
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Security QA</span>
+<span class="px-2 py-0.5 rounded border border-outline-variant font-code-sm text-label-sm text-secondary">Payload Testing</span>
+</div>
+<div class="mt-2 text-right">
+<span class="font-code-sm text-[11px] text-outline">Simulated: Synthesizing telemetry</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Live Stream Console Ticker (Drawer style) -->
+<div class="mt-auto border border-outline-variant rounded-xl p-2.5 bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-code-sm text-label-sm">
+<div class="flex items-center gap-2 overflow-hidden">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse shrink-0"></span>
+<span class="text-secondary shrink-0">[14:22:04.192]</span>
+<span class="text-primary font-medium shrink-0">[AGENT_GEN]</span>
+<span class="text-secondary truncate">Synthetic persona 'Enterprise Security Auditor' parameters locked.</span>
+</div>
+<button class="shrink-0 flex items-center gap-1 text-primary hover:underline font-medium px-2 py-1 bg-surface-container-lowest rounded border border-outline-variant">
+<span>View Raw Log</span>
+<kbd class="px-1 border border-outline-variant rounded text-[10px] text-secondary">L</kbd>
+</button>
+</div>
+</section>
+</main>
+<!-- WEB FOOTER (Shared Component) -->
+<footer class="w-full px-space-xl py-space-md flex flex-col md:flex-row items-center justify-between text-label-sm font-label-sm border-t border-outline-variant bg-surface-container-lowest docked full-width bottom mt-auto">
+<!-- Copyright -->
+<div class="text-secondary">
+      © 2025 PreFlight Systems Inc. Calibrated for production agility.
+    </div>
+<!-- Footer Links -->
+<div class="flex flex-wrap items-center gap-6 mt-3 md:mt-0 text-secondary">
+<a class="hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="hover:text-primary transition-colors" href="#">API Reference</a>
+<span class="flex items-center gap-1 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+        Status: Systems Operational
+      </span>
+<a class="hover:text-primary transition-colors font-code-sm text-code-sm" href="#">Keyboard Shortcuts [?]</a>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const errorBanner = document.createElement('div');
+    errorBanner.id = 'error-banner';
+    errorBanner.className = 'hidden fixed top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50 font-label-md';
+    document.body.appendChild(errorBanner);
+
+    function showError(msg) {
+      errorBanner.textContent = msg;
+      errorBanner.classList.remove('hidden');
+      setTimeout(() => errorBanner.classList.add('hidden'), 5000);
+    }
+
+    const projectId = localStorage.getItem('project_id');
+    if (!projectId) {
+      showError('No project ID found. Returning to start.');
+      setTimeout(() => window.location.href = 'index.html', 2000);
+      return;
+    }
+
+    // Identify pipeline stages text elements
+    // Stage 1 is Environment Ready, Stage 2 Generating AI Users, Stage 3 Building Scenarios, Stage 4 Running Tests
+    // We'll just update the status by finding them by text
+    const pipelineItems = Array.from(document.querySelectorAll('.font-label-md'));
+    const stagePersonas = pipelineItems.find(el => el.textContent.includes('Generating AI Users'));
+    const stageScenarios = pipelineItems.find(el => el.textContent.includes('Building Scenarios'));
+    const stageRun = pipelineItems.find(el => el.textContent.includes('Running Tests'));
+    const stageAnalysis = pipelineItems.find(el => el.textContent.includes('Analysis'));
+
+    function markStageActive(element) {
+      if(!element) return;
+      const parent = element.closest('.flex.items-start');
+      if(parent) {
+        parent.classList.remove('opacity-60');
+        const iconDiv = parent.querySelector('.w-5.h-5');
+        if(iconDiv) {
+          iconDiv.innerHTML = '<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>';
+          iconDiv.className = 'w-5 h-5 rounded-full border border-primary bg-surface-container-lowest text-primary flex items-center justify-center shrink-0 mt-0.5 z-10';
+        }
+      }
+    }
+
+    function markStageComplete(element) {
+      if(!element) return;
+      const parent = element.closest('.flex.items-start');
+      if(parent) {
+        parent.classList.remove('opacity-60');
+        const iconDiv = parent.querySelector('.w-5.h-5');
+        if(iconDiv) {
+          iconDiv.innerHTML = '<span class="material-symbols-outlined text-[12px]">check</span>';
+          iconDiv.className = 'w-5 h-5 rounded-full bg-primary text-surface-container-lowest flex items-center justify-center shrink-0 mt-0.5 z-10';
+        }
+      }
+    }
+
+    const grid = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2');
+    
+    try {
+      // 1. Generate Personas
+      markStageActive(stagePersonas);
+      const personasRes = await fetch(`/api/project/${projectId}/generate-personas`, { method: 'POST' });
+      if (!personasRes.ok) throw new Error('Failed to generate personas');
+      const personas = await personasRes.json();
+      
+      // Render Personas
+      if (grid) {
+        grid.innerHTML = '';
+        personas.forEach((p, i) => {
+          grid.innerHTML += `
+            <article class="border border-outline-variant rounded-xl p-4 bg-surface-container-lowest flex flex-col justify-between hover:border-primary transition-colors animate-fade-in" style="animation-delay: ${i*150}ms">
+              <div>
+                <div class="flex items-start justify-between gap-3 mb-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded border border-primary bg-primary text-surface-container-lowest flex items-center justify-center font-code-sm text-label-md font-bold">${i+1}</div>
+                    <div>
+                      <h3 class="font-headline-sm text-headline-sm text-primary">${p.name}</h3>
+                      <span class="font-code-sm text-label-sm text-secondary">${p.device_tag}</span>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-lg border border-outline-variant text-label-sm font-label-sm font-code-sm text-secondary bg-surface-container-low">● Ready</span>
+                </div>
+                <p class="font-body-sm text-body-sm text-secondary mb-4">${p.description}</p>
+              </div>
+            </article>
+          `;
+        });
+      }
+      
+      localStorage.setItem('personas', JSON.stringify(personas));
+      markStageComplete(stagePersonas);
+
+      // 2. Generate Scenarios
+      markStageActive(stageScenarios);
+      const scenariosRes = await fetch(`/api/project/${projectId}/generate-scenarios`, { method: 'POST' });
+      if (!scenariosRes.ok) throw new Error('Failed to generate scenarios');
+      const scenariosData = await scenariosRes.json();
+      localStorage.setItem('scenarios_generated', JSON.stringify(scenariosData));
+      markStageComplete(stageScenarios);
+
+      // 3. Run Scenarios
+      markStageActive(stageRun);
+      const runRes = await fetch(`/api/project/${projectId}/run-scenarios`, { method: 'POST' });
+      if (!runRes.ok) throw new Error('Failed to run scenarios');
+      const runData = await runRes.json();
+      localStorage.setItem('scenarios_run', JSON.stringify(runData));
+      markStageComplete(stageRun);
+
+      // Navigate to dashboard
+      window.location.href = 'dashboard.html';
+
+    } catch (err) {
+      showError(err.message);
+    }
+  });
+</script>
+<style>
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fade-in { animation: fadeIn 0.4s ease forwards; opacity: 0; }
+</style>
+</body>
+</html>

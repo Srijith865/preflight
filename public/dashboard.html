@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PreFlight — Live Test Run #8492</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config verbatum from design tokens -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#c6c6c6",
+            "surface-container-high": "#e2e8f8",
+            "tertiary": "#000000",
+            "on-error-container": "#93000a",
+            "background": "#f9f9ff",
+            "on-primary-fixed-variant": "#474747",
+            "on-tertiary-container": "#848484",
+            "surface-tint": "#5e5e5e",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#e2e2e2",
+            "surface-container-low": "#f0f3ff",
+            "inverse-surface": "#2a313d",
+            "surface": "#f9f9ff",
+            "outline": "#7e7576",
+            "on-surface-variant": "#4c4546",
+            "surface-bright": "#f9f9ff",
+            "surface-container-highest": "#dce2f3",
+            "secondary": "#575e70",
+            "on-tertiary-fixed-variant": "#474747",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#404758",
+            "surface-container-lowest": "#ffffff",
+            "primary-container": "#1b1b1b",
+            "error": "#ba1a1a",
+            "on-error": "#ffffff",
+            "on-tertiary-fixed": "#1b1b1b",
+            "on-background": "#151c27",
+            "inverse-on-surface": "#ebf1ff",
+            "surface-variant": "#dce2f3",
+            "on-tertiary": "#ffffff",
+            "on-surface": "#151c27",
+            "on-secondary-fixed": "#141b2b",
+            "secondary-container": "#d9dff5",
+            "on-primary-fixed": "#1b1b1b",
+            "on-primary-container": "#848484",
+            "primary": "#000000",
+            "tertiary-fixed-dim": "#c6c6c6",
+            "tertiary-container": "#1b1b1b",
+            "outline-variant": "#cfc4c5",
+            "surface-dim": "#d3daea",
+            "inverse-primary": "#c6c6c6",
+            "on-secondary-container": "#5c6274",
+            "secondary-fixed-dim": "#c0c6db",
+            "secondary-fixed": "#dce2f7",
+            "on-primary": "#ffffff",
+            "surface-container": "#e7eefe",
+            "primary-fixed": "#e2e2e2"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin": "1.5rem",
+            "space-lg": "1.25rem",
+            "gutter": "1rem",
+            "space-md": "0.75rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2rem",
+            "space-xs": "0.25rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Inter"],
+            "code-sm": ["JetBrains Mono"],
+            "headline-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "body-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-xl": ["Inter"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "code-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "body-lg": ["15px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    /* Monochrome Terminal Custom Scrollbar */
+    .custom-terminal-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-terminal-scroll::-webkit-scrollbar-track {
+      background: #000000;
+    }
+    .custom-terminal-scroll::-webkit-scrollbar-thumb {
+      background: #333333;
+      border-radius: 2px;
+    }
+    .custom-terminal-scroll::-webkit-scrollbar-thumb:hover {
+      background: #555555;
+    }
+
+    @keyframes pulseMono {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .pulse-mono {
+      animation: pulseMono 1.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes cursorBlink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .cursor-blink {
+      animation: cursorBlink 0.9s infinite;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col font-body-sm text-body-sm selection:bg-primary selection:text-on-primary">
+<!-- TOP APP BAR (Shared Component: TopNavBar) -->
+<header class="w-full h-12 px-space-xl flex items-center justify-between border-b border-outline-variant bg-surface-container-lowest docked full-width top-0 sticky z-40">
+<!-- Left: Brand Logo & Navigation Links -->
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 bg-primary rounded-lg flex items-center justify-center">
+<span class="w-2 h-2 bg-on-primary rounded-sm"></span>
+</span>
+<span class="text-headline-sm font-headline-sm tracking-tight font-semibold text-primary">PreFlight</span>
+</div>
+<div class="h-4 w-px bg-outline-variant mx-1"></div>
+<!-- Search Bar on Left as defined in JSON -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2 text-outline text-[16px] pointer-events-none" data-icon="search">search</span>
+<input class="h-7 pl-7 pr-8 py-1 bg-surface-container-lowest text-primary text-label-sm font-label-sm border border-outline-variant rounded-lg w-56 focus:outline-none focus:border-primary placeholder:text-outline" placeholder="Search runs, metrics, traces..." type="text"/>
+<span class="absolute right-2 text-outline text-[10px] font-code-sm border border-outline-variant px-1 rounded">⌘K</span>
+</div>
+<!-- Navigation Links: Dashboard is active for this screen -->
+<nav class="hidden md:flex items-center space-x-6 text-label-md font-label-md">
+<a class="text-primary font-medium border-b-2 border-primary pb-3.5 pt-3.5" href="#">Dashboard</a>
+<a class="text-secondary hover:text-primary pb-3.5 pt-3.5 transition-colors" href="#">Docs</a>
+<a class="text-secondary hover:text-primary pb-3.5 pt-3.5 transition-colors" href="#">Settings</a>
+</nav>
+</div>
+<!-- Right: Status, Actions, Profile -->
+<div class="flex items-center gap-space-md">
+<!-- Status Indicator (Monochrome) -->
+<div class="hidden sm:flex items-center gap-1.5 px-2 py-1 bg-surface-container-lowest border border-outline-variant rounded-lg text-label-sm font-label-sm text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary pulse-mono"></span>
+<span class="font-code-sm">Status: Online</span>
+</div>
+<!-- Trailing Action Button: Deploy Check -->
+<button class="h-7 px-3 bg-primary text-on-primary rounded-lg text-label-sm font-label-sm font-medium hover:bg-neutral-800 active:scale-[0.99] transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="rocket_launch">rocket_launch</span>
+<span>Deploy Check</span>
+</button>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- Trailing Icon Actions -->
+<div class="flex items-center gap-1">
+<button class="w-7 h-7 flex items-center justify-center text-secondary hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors" title="Terminal Access">
+<span class="material-symbols-outlined text-[18px]" data-icon="terminal">terminal</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center text-secondary hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors" title="Notifications">
+<span class="material-symbols-outlined text-[18px]" data-icon="notifications">notifications</span>
+</button>
+</div>
+<!-- Profile Avatar -->
+<div class="relative group cursor-pointer">
+<img alt="User workspace profile avatar" class="w-6 h-6 rounded-lg object-cover border border-outline-variant filter grayscale contrast-125" data-alt="Monochrome close-up portrait of a developer in a sharp modern studio environment with neutral grey backlighting and minimalist technical clothing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3mZFuFhORv4E6KPT8OacMrkloeV8JKJyqgIPSFB7FjMA2iHn6wDfOdDh0jRFopgpyHMbYEHNVWmkIz0qk8wLDnVvftgnCVCS80o9xcAZ_VrYdOtqBc5vpsRjbfebmhi9tKPiDuDFzzR2SuS9BrF10UXU_7pOvgnbSM6nufYadGe28Q5jHFq_o3PD7y8sfjQMorz3YDpl7OBLFH7C21RYZVkI2XsSuTm2SzqoN8cdectxsT1k3NavDPA"/>
+</div>
+</div>
+</header>
+<!-- SUB-BAR / CONTEXT BAR -->
+<section class="w-full bg-surface-container-lowest border-b border-outline-variant px-space-xl py-2 flex flex-wrap items-center justify-between gap-y-2">
+<!-- Left: Target details & status telemetry -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Target Breadcrumb -->
+<div class="flex items-center gap-1.5 font-code-sm text-code-sm text-primary">
+<a class="text-secondary hover:text-primary transition-colors flex items-center" href="#">
+<span class="material-symbols-outlined text-[14px] mr-1" data-icon="arrow_back">arrow_back</span>
+          staging.preflight.run
+        </a>
+<span class="text-outline-variant">/</span>
+<span class="font-semibold text-primary">Test Run #8492</span>
+</div>
+<div class="h-3.5 w-px bg-outline-variant hidden sm:block"></div>
+<!-- Status Pills: Active Running Pill -->
+<div class="flex items-center gap-2">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary text-on-primary rounded text-label-sm font-label-sm font-semibold tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-on-primary pulse-mono"></span>
+<span>RUNNING</span>
+</div>
+<div class="inline-flex items-center gap-1 px-2 py-0.5 bg-surface-container-low text-secondary border border-outline-variant rounded text-label-sm font-label-sm font-code-sm">
+<span>Stage: Running Tests (4/5)</span>
+</div>
+<div class="text-secondary text-label-sm font-code-sm hidden md:inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-outline" data-icon="timer">timer</span>
+<span id="elapsed-timer">01:24</span> elapsed
+          <span class="text-outline-variant">•</span>
+<span class="text-secondary">Est. remaining: 42s</span>
+</div>
+</div>
+</div>
+<!-- Right: Operational Controls -->
+<div class="flex items-center gap-2">
+<button class="h-7 px-2.5 bg-surface-container-lowest border border-outline-variant text-primary hover:bg-surface-container-low active:scale-[0.99] rounded text-label-sm font-label-sm transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="pause">pause</span>
+<span>Pause Run</span>
+<kbd class="font-code-sm text-[10px] text-secondary border border-outline-variant px-1 rounded bg-surface">Space</kbd>
+</button>
+<button class="h-7 px-2.5 bg-surface-container-lowest border border-outline-variant text-primary hover:bg-surface-container-low active:scale-[0.99] rounded text-label-sm font-label-sm transition-all flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="cancel">cancel</span>
+<span>Abort</span>
+<kbd class="font-code-sm text-[10px] text-secondary border border-outline-variant px-1 rounded bg-surface">ESC</kbd>
+</button>
+<button class="h-7 px-2.5 bg-surface-container-lowest border border-outline-variant text-primary hover:bg-surface-container-low active:scale-[0.99] rounded text-label-sm font-label-sm transition-all flex items-center gap-1.5" title="Download JSON/NDJSON output">
+<span class="material-symbols-outlined text-[14px]" data-icon="download">download</span>
+<span>Export Stream</span>
+</button>
+</div>
+</section>
+<!-- WORKSPACE PROGRESS TRACK (Continuous Micro Progress) -->
+<div class="w-full bg-outline-variant h-[2px]">
+<div class="bg-primary h-[2px] transition-all duration-300 ease-out" style="width: 66%;"></div>
+</div>
+<!-- MAIN CANVAS: Two Column Split (60% / 40%) -->
+<main class="flex-1 px-space-xl py-4 flex flex-col lg:flex-row gap-4 max-w-[1920px] mx-auto w-full">
+<!-- LEFT COLUMN (60%): Live Terminal / Agent Event Log -->
+<section class="lg:w-[60%] flex flex-col bg-primary rounded border border-outline-variant shadow-none overflow-hidden">
+<!-- Terminal Window Bar -->
+<div class="h-9 px-3 bg-neutral-900 border-b border-neutral-800 flex items-center justify-between select-none">
+<div class="flex items-center gap-2">
+<!-- Monochrome macOS style window pips -->
+<div class="flex items-center gap-1.5 mr-2">
+<span class="w-2.5 h-2.5 rounded-full bg-neutral-700 hover:bg-neutral-600 transition-colors"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-neutral-700 hover:bg-neutral-600 transition-colors"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-neutral-700 hover:bg-neutral-600 transition-colors"></span>
+</div>
+<span class="font-code-sm text-code-sm text-neutral-300 font-medium tracking-tight">LIVE_AGENT_STREAM -- stdout / stderr</span>
+<span class="text-[10px] font-code-sm px-1.5 py-0.2 bg-neutral-800 text-neutral-400 border border-neutral-700 rounded">PID: 4920</span>
+</div>
+<!-- Terminal Filter & Action Toolbar -->
+<div class="flex items-center gap-2 text-label-sm font-code-sm">
+<div class="flex items-center gap-1 text-neutral-400 text-[11px]">
+<span class="material-symbols-outlined text-[14px] text-neutral-400" data-icon="filter_alt">filter_alt</span>
+<select class="bg-neutral-900 text-neutral-300 border border-neutral-700 rounded text-[11px] py-0.5 px-2 focus:outline-none focus:border-neutral-500">
+<option>All Agents (4)</option>
+<option>Impatient Power User</option>
+<option>Mobile Edge-Case</option>
+<option>Enterprise Security</option>
+<option>Hesitant First-Time Visitor</option>
+</select>
+</div>
+<button class="px-2 py-0.5 rounded bg-neutral-800 text-neutral-200 border border-neutral-700 hover:bg-neutral-700 transition-colors text-[11px] flex items-center gap-1" id="toggle-autoscroll">
+<span class="w-1.5 h-1.5 rounded-full bg-neutral-200"></span>
+            Auto-scroll
+          </button>
+<button class="px-2 py-0.5 rounded text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800 transition-colors text-[11px]">
+            Clear
+          </button>
+</div>
+</div>
+<!-- Terminal Body / Log Stream -->
+<div class="flex-1 p-3 bg-neutral-950 font-code-sm text-code-sm overflow-y-auto max-h-[660px] min-h-[520px] custom-terminal-scroll space-y-1.5" id="terminal-container">
+<!-- Log Entry 1 -->
+<div class="flex items-start gap-2 text-neutral-400 hover:bg-neutral-900/60 py-0.5 px-1 rounded transition-colors font-mono">
+<span class="text-neutral-600 select-none text-[11px]">14:26:01.102</span>
+<span class="px-1.5 py-0.2 rounded bg-neutral-900 text-neutral-300 border border-neutral-800 text-[11px] whitespace-nowrap">Agent: Impatient Power User</span>
+<span class="text-neutral-300">Navigating to <span class="text-neutral-100 underline decoration-neutral-700">/checkout</span> — synthetic click burst on <span class="text-neutral-100 font-semibold">[Pay Now]</span></span>
+</div>
+<!-- Log Entry 2 -->
+<div class="flex items-start gap-2 text-neutral-400 hover:bg-neutral-900/60 py-0.5 px-1 rounded transition-colors font-mono">
+<span class="text-neutral-600 select-none text-[11px]">14:26:02.480</span>
+<span class="px-1.5 py-0.2 rounded bg-neutral-900 text-neutral-300 border border-neutral-800 text-[11px] whitespace-nowrap">Agent: Mobile Edge-Case</span>
+<span class="text-neutral-300">Throttled 3G simulation active. Initiating OAuth callback with simulated packet drop (18% loss rate).</span>
+</div>
+<!-- Log Entry 3 (CRITICAL ISSUE) -->
+<div class="flex items-start gap-2 bg-neutral-900 border-l-2 border-neutral-200 py-1 px-1.5 rounded-r transition-colors font-mono">
+<span class="text-neutral-500 select-none text-[11px]">14:26:03.914</span>
+<span class="px-1.5 py-0.2 rounded bg-neutral-800 text-neutral-200 border border-neutral-700 text-[11px] whitespace-nowrap">Agent: Mobile Edge-Case</span>
+<span class="text-neutral-100 flex-1">
+<span class="bg-neutral-100 text-neutral-950 px-1 rounded font-bold text-[10px] mr-1.5">ISSUE: CRITICAL</span>
+            Error on step 3: Payment modal unresponsive (DOM click timeout &gt; 4000ms). Action thread blocked.
+          </span>
+<button class="text-neutral-400 hover:text-neutral-100 text-[10px] underline ml-2 whitespace-nowrap">Trace #102</button>
+</div>
+<!-- Log Entry 4 -->
+<div class="flex items-start gap-2 text-neutral-400 hover:bg-neutral-900/60 py-0.5 px-1 rounded transition-colors font-mono">
+<span class="text-neutral-600 select-none text-[11px]">14:26:04.120</span>
+<span class="px-1.5 py-0.2 rounded bg-neutral-900 text-neutral-300 border border-neutral-800 text-[11px] whitespace-nowrap">Agent: Enterprise Security</span>
+<span class="text-neutral-300">Probing <span class="text-neutral-100 font-mono">/api/v1/user/tokens</span> with mutated authorization bearer headers (fuzzer run 2/10).</span>
+</div>
+<!-- Log Entry 5 (WARNING ISSUE) -->
+<div class="flex items-start gap-2 bg-neutral-900/80 border-l-2 border-neutral-500 py-1 px-1.5 rounded-r transition-colors font-mono">
+<span class="text-neutral-500 select-none text-[11px]">14:26:05.350</span>
+<span class="px-1.5 py-0.2 rounded bg-neutral-800 text-neutral-300 border border-neutral-700 text-[11px] whitespace-nowrap">Agent: Enterprise Security</span>
+<span class="text-neutral-200 flex-1">
+<span class="bg-neutral-700 text-neutral-200 px-1 rounded font-semibold text-[10px] mr-1.5">ISSUE: WARNING</span>
+            CORS header wildcard <span class="text-neutral-100 font-mono">"Access-Control-Allow-Origin: *"</span> detected on staging subdomain.
+          </span>
+<button class="text-neutral-400 hover:text-neutral-100 text-[10px] underline ml-2 whitespace-nowrap">Trace #103</button>
+</div>
+<!-- Log Entry 6 -->
+<div class="flex items-start gap-2 text-neutral-400 hover:bg-neutral-900/60 py-0.5 px-1 rounded transition-colors font-mono">
+<span class="text-neutral-600 select-none text-[11px]">14:26:06.820</span>
+<span class="px-1.5 py-0.2 rounded bg-neutral-900 text-neutral-300 border border-neutral-800 text-[11px] whitespace-nowrap">Agent: Hesitant First-Time Visitor</span>
+<span class="text-neutral-300">Mouseleave trigger activated -&gt; Inspecting exit-intent discount prompt modal overlay DOM bounds.</span>
+</div>
+<!-- Log Entry 7 (MINOR ISSUE) -->
+<div class="flex items-start gap-2 bg-neutral-900/40 border-l-2 border-neutral-700 py-1 px-1.5 rounded-r transition-colors font-mono">
+<span class="text-neutral-500 select-none text-[11px]">14:26:07.410</span>
+<span class="px-1.5 py-0.2 rounded bg-neutral-900 text-neutral-300 border border-neutral-800 text-[11px] whitespace-nowrap">Agent: Impatient Power User</span>
+<span class="text-neutral-300 flex-1">
+<span class="bg-neutral-800 text-neutral-300 px-1 rounded text-[10px] mr-1.5">ISSUE: MINOR</span>
+            Layout shift (CLS 0.18) observed during price tier dynamic recalculation.
+          </span>
+<button class="text-neutral-400 hover:text-neutral-100 text-[10px] underline ml-2 whitespace-nowrap">Trace #104</button>
+</div>
+<!-- Log Entry 8 -->
+<div class="flex items-start gap-2 text-neutral-400 hover:bg-neutral-900/60 py-0.5 px-1 rounded transition-colors font-mono">
+<span class="text-neutral-600 select-none text-[11px]">14:26:08.990</span>
+<span class="px-1.5 py-0.2 rounded bg-neutral-900 text-neutral-300 border border-neutral-800 text-[11px] whitespace-nowrap">Agent: Hesitant First-Time Visitor</span>
+<span class="text-neutral-200">Scenario 07: Cart Abandonment Recovery completed successfully. Verified webhook emission.</span>
+</div>
+<!-- Simulated Active Pulse Entry -->
+<div class="flex items-start gap-2 text-neutral-300 py-1 px-1 font-mono">
+<span class="text-neutral-600 select-none text-[11px]">14:26:09.314</span>
+<span class="px-1.5 py-0.2 rounded bg-neutral-900 text-neutral-400 border border-neutral-800 text-[11px] whitespace-nowrap">Agent: Enterprise Security</span>
+<span class="text-neutral-400 flex items-center">
+            Evaluating session hijacking vector on local storage tokens
+            <span class="inline-block w-1.5 h-3.5 bg-neutral-200 ml-1.5 cursor-blink"></span>
+</span>
+</div>
+</div>
+<!-- Terminal Status Line Footer -->
+<div class="h-7 px-3 bg-neutral-900 border-t border-neutral-800 flex items-center justify-between text-neutral-400 font-code-sm text-[11px]">
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-neutral-300"></span>
+<span>Workers: 4/4 online</span>
+</span>
+<span class="text-neutral-700">|</span>
+<span>Throughput: 1,420 evt/s</span>
+<span class="text-neutral-700">|</span>
+<span>Transferred: 482.4 KB</span>
+</div>
+<div class="flex items-center gap-2 text-neutral-500">
+<span>UTF-8</span>
+<span>LF</span>
+<span>STDERR_CAPTURE: ON</span>
+</div>
+</div>
+</section>
+<!-- RIGHT COLUMN (40%): Real-Time Tally & Telemetry Cards -->
+<section class="lg:w-[40%] flex flex-col gap-4">
+<!-- Bento Stat Cards Grid (2x2) -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Card 1: Issues Found -->
+<div class="bg-surface-container-lowest p-3 border border-outline-variant rounded flex flex-col justify-between">
+<div class="flex items-center justify-between text-secondary">
+<span class="text-label-sm font-label-sm uppercase tracking-wide">Issues Found</span>
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="warning">warning</span>
+</div>
+<div class="my-2">
+<div class="text-3xl font-bold font-code-sm text-primary tracking-tight">4</div>
+<div class="text-label-sm font-label-sm text-secondary mt-0.5">1 Critical • 1 Warning • 2 Minor</div>
+</div>
+<div class="text-[11px] font-code-sm text-secondary border-t border-outline-variant pt-1.5 flex items-center justify-between">
+<span>Regression Index</span>
+<span class="font-medium text-primary">High (+2)</span>
+</div>
+</div>
+<!-- Card 2: Scenarios Completed -->
+<div class="bg-surface-container-lowest p-3 border border-outline-variant rounded flex flex-col justify-between">
+<div class="flex items-center justify-between text-secondary">
+<span class="text-label-sm font-label-sm uppercase tracking-wide">Scenarios Completed</span>
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="task_alt">task_alt</span>
+</div>
+<div class="my-2">
+<div class="text-3xl font-bold font-code-sm text-primary tracking-tight">8 <span class="text-lg text-secondary font-normal">/ 12</span></div>
+<div class="text-label-sm font-label-sm text-secondary mt-0.5">66.6% workload finished</div>
+</div>
+<div class="text-[11px] font-code-sm text-secondary border-t border-outline-variant pt-1.5 flex items-center justify-between">
+<span>Remaining execution</span>
+<span class="font-medium text-primary">~42 sec</span>
+</div>
+</div>
+<!-- Card 3: Active Agents -->
+<div class="bg-surface-container-lowest p-3 border border-outline-variant rounded flex flex-col justify-between">
+<div class="flex items-center justify-between text-secondary">
+<span class="text-label-sm font-label-sm uppercase tracking-wide">Active Agents</span>
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="my-2">
+<div class="text-3xl font-bold font-code-sm text-primary tracking-tight">4</div>
+<div class="text-label-sm font-label-sm text-secondary mt-0.5">Autonomous synthetic peers</div>
+</div>
+<div class="text-[11px] font-code-sm text-secondary border-t border-outline-variant pt-1.5 flex items-center justify-between">
+<span>Concurrency saturation</span>
+<span class="font-medium text-primary">100% (Allocated)</span>
+</div>
+</div>
+<!-- Card 4: Avg Latency -->
+<div class="bg-surface-container-lowest p-3 border border-outline-variant rounded flex flex-col justify-between">
+<div class="flex items-center justify-between text-secondary">
+<span class="text-label-sm font-label-sm uppercase tracking-wide">Avg Latency</span>
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="speed">speed</span>
+</div>
+<div class="my-2">
+<div class="text-3xl font-bold font-code-sm text-primary tracking-tight">38<span class="text-base text-secondary font-normal">ms</span></div>
+<div class="text-label-sm font-label-sm text-secondary mt-0.5">p95: 112ms • p99: 240ms</div>
+</div>
+<div class="text-[11px] font-code-sm text-secondary border-t border-outline-variant pt-1.5 flex items-center justify-between">
+<span>Network condition</span>
+<span class="font-medium text-primary">Stable (Staging)</span>
+</div>
+</div>
+</div>
+<!-- Severity Breakdown Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-3">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-headline-sm font-headline-sm text-primary font-medium text-[13px]">Issue Severity Breakdown</h3>
+<span class="text-label-sm font-code-sm text-secondary">Strict Grayscale Calibration</span>
+</div>
+<!-- Horizontal Monochrome Stacked Bar -->
+<div class="w-full h-3 bg-neutral-200 rounded flex overflow-hidden mb-3">
+<!-- Critical: Solid Pure Black (25% proportion: 1 of 4) -->
+<div class="h-full bg-primary" style="width: 25%;" title="1 Critical (25%)"></div>
+<!-- Warning: Mid-Dark Slate/Gray (25%) -->
+<div class="h-full bg-neutral-600" style="width: 25%;" title="1 Warning (25%)"></div>
+<!-- Minor: Mid-Light Gray (50%) -->
+<div class="h-full bg-neutral-400" style="width: 50%;" title="2 Minor (50%)"></div>
+</div>
+<!-- Detailed Breakdown Rows -->
+<div class="space-y-2 text-label-sm font-label-sm">
+<!-- Critical -->
+<div class="flex items-center justify-between p-1.5 bg-surface rounded border border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 bg-primary rounded-sm"></span>
+<span class="font-medium text-primary">Critical Severity</span>
+<span class="text-[11px] font-code-sm text-secondary">● Payment freeze / DOM Timeout</span>
+</div>
+<span class="px-2 py-0.5 bg-primary text-on-primary rounded font-code-sm text-[11px] font-semibold">1</span>
+</div>
+<!-- Warning -->
+<div class="flex items-center justify-between p-1.5 bg-surface rounded border border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 bg-neutral-600 rounded-sm"></span>
+<span class="font-medium text-primary">Warning Severity</span>
+<span class="text-[11px] font-code-sm text-secondary">● CORS wildcard staging issue</span>
+</div>
+<span class="px-2 py-0.5 bg-neutral-600 text-white rounded font-code-sm text-[11px] font-semibold">1</span>
+</div>
+<!-- Minor -->
+<div class="flex items-center justify-between p-1.5 bg-surface rounded border border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 bg-neutral-400 rounded-sm"></span>
+<span class="font-medium text-primary">Minor Severity</span>
+<span class="text-[11px] font-code-sm text-secondary">● Layout shift &amp; contrast ratio</span>
+</div>
+<span class="px-2 py-0.5 bg-neutral-300 text-neutral-900 rounded font-code-sm text-[11px] font-semibold">2</span>
+</div>
+</div>
+</div>
+<!-- Live Scenario Checklist Card (12 items total) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-3 flex-1 flex flex-col">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant mb-2">
+<div class="flex items-center gap-2">
+<h3 class="text-headline-sm font-headline-sm text-primary font-medium text-[13px]">Scenario Checklist</h3>
+<span class="text-[11px] font-code-sm px-1.5 bg-surface border border-outline-variant rounded text-secondary">8 / 12 complete</span>
+</div>
+<span class="text-[11px] text-secondary font-code-sm">Thread: #01-PARALLEL</span>
+</div>
+<!-- Scrollable Scenario Tree -->
+<div class="space-y-1 overflow-y-auto max-h-[260px] pr-1">
+<!-- 1 Completed -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-secondary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="check_box">check_box</span>
+<span class="line-through text-outline">01. Cold Start Initialization &amp; Asset Prefetch</span>
+</div>
+<span class="font-code-sm text-[10px] text-outline">120ms</span>
+</div>
+<!-- 2 Completed -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-secondary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="check_box">check_box</span>
+<span class="line-through text-outline">02. Magic Link Auth Request &amp; Token Validation</span>
+</div>
+<span class="font-code-sm text-[10px] text-outline">240ms</span>
+</div>
+<!-- 3 Completed -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-secondary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="check_box">check_box</span>
+<span class="line-through text-outline">03. Workspace Creation with Special Unicode Glyphs</span>
+</div>
+<span class="font-code-sm text-[10px] text-outline">310ms</span>
+</div>
+<!-- 4 Completed -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-secondary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="check_box">check_box</span>
+<span class="line-through text-outline">04. Invite Team Member Matrix (Multi-Role test)</span>
+</div>
+<span class="font-code-sm text-[10px] text-outline">190ms</span>
+</div>
+<!-- 5 Completed -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-secondary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="check_box">check_box</span>
+<span class="line-through text-outline">05. Billing Upgrade Tier with Invalid Tax ID</span>
+</div>
+<span class="font-code-sm text-[10px] text-outline">580ms</span>
+</div>
+<!-- 6 Completed -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-secondary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="check_box">check_box</span>
+<span class="line-through text-outline">06. 3D Model Render Engine Fallback to Canvas2D</span>
+</div>
+<span class="font-code-sm text-[10px] text-outline">890ms</span>
+</div>
+<!-- 7 Completed -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-secondary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="check_box">check_box</span>
+<span class="line-through text-outline">07. Cart Abandonment Recovery &amp; State Hydration</span>
+</div>
+<span class="font-code-sm text-[10px] text-outline">410ms</span>
+</div>
+<!-- 8 Completed -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-secondary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="check_box">check_box</span>
+<span class="line-through text-outline">08. CSV Bulk Export &gt; 50,000 Row Streamer</span>
+</div>
+<span class="font-code-sm text-[10px] text-outline">1,240ms</span>
+</div>
+<!-- 9 ACTIVE (IN PROGRESS) -->
+<div class="flex items-center justify-between py-1.5 px-2 rounded bg-surface border-l-2 border-primary text-label-sm text-primary font-medium">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary animate-spin" data-icon="progress_activity">progress_activity</span>
+<span>09. Payment Gateway Timeout &amp; Double-Click Burst</span>
+</div>
+<span class="font-code-sm text-[10px] bg-neutral-900 text-neutral-100 px-1.5 py-0.5 rounded">RUNNING</span>
+</div>
+<!-- 10 Pending -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-outline">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-outline" data-icon="check_box_outline_blank">check_box_outline_blank</span>
+<span>10. Offline ServiceWorker Synchronization</span>
+</div>
+<span class="font-code-sm text-[10px]">queued</span>
+</div>
+<!-- 11 Pending -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-outline">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-outline" data-icon="check_box_outline_blank">check_box_outline_blank</span>
+<span>11. Dark/Light Theme Switching under Rapid Input</span>
+</div>
+<span class="font-code-sm text-[10px]">queued</span>
+</div>
+<!-- 12 Pending -->
+<div class="flex items-center justify-between py-1 px-1.5 rounded hover:bg-surface text-label-sm text-outline">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-outline" data-icon="check_box_outline_blank">check_box_outline_blank</span>
+<span>12. Session Purge on Browser Tab Terminate</span>
+</div>
+<span class="font-code-sm text-[10px]">queued</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- WORKSPACE TELEMETRY RUN FOOTER (Shared Component: Footer) -->
+<footer class="w-full px-space-xl py-space-md flex flex-col md:flex-row items-center justify-between text-label-sm font-label-sm border-t border-outline-variant bg-surface-container-lowest docked full-width bottom mt-auto">
+<!-- Left: Brand / Copyright & Integrity Hash -->
+<div class="flex flex-col sm:flex-row items-center gap-2 text-secondary mb-2 md:mb-0">
+<span class="font-semibold text-primary">PreFlight Systems</span>
+<span class="hidden sm:inline text-outline-variant">•</span>
+<span>© 2025 PreFlight Systems Inc. Calibrated for production agility.</span>
+<span class="hidden sm:inline text-outline-variant">•</span>
+<span class="font-code-sm text-[10px] text-outline">SHA-256: 8f9a2e1d09c8...</span>
+</div>
+<!-- Right: Footer Links as specified in Shared Components JSON -->
+<div class="flex items-center space-x-4 text-label-sm font-label-sm">
+<a class="text-secondary hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="text-secondary hover:text-primary transition-colors" href="#">API Reference</a>
+<a class="text-secondary hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Status: Systems Operational</span>
+</a>
+<a class="text-secondary hover:text-primary transition-colors font-code-sm text-code-sm" href="#">Keyboard Shortcuts [?]</a>
+</div>
+</footer>
+<!-- Micro-interactions Script -->
+<script>
+    // Live elapsed timer simulation
+    let seconds = 84;
+    const timerElem = document.getElementById('elapsed-timer');
+    if (timerElem) {
+      setInterval(() => {
+        seconds++;
+        const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const secs = String(seconds % 60).padStart(2, '0');
+        timerElem.textContent = `${mins}:${secs}`;
+      }, 1000);
+    }
+
+    // Toggle Auto-scroll button state
+    const autoScrollBtn = document.getElementById('toggle-autoscroll');
+    let autoScrollActive = true;
+    if (autoScrollBtn) {
+      autoScrollBtn.addEventListener('click', () => {
+        autoScrollActive = !autoScrollActive;
+        if (autoScrollActive) {
+          autoScrollBtn.classList.remove('text-neutral-500', 'bg-transparent');
+          autoScrollBtn.classList.add('bg-neutral-800', 'text-neutral-200');
+        } else {
+          autoScrollBtn.classList.remove('bg-neutral-800', 'text-neutral-200');
+          autoScrollBtn.classList.add('text-neutral-500', 'bg-transparent');
+        }
+      });
+    }
+
+    // Keyboard shortcuts (Space to pause, Escape to abort)
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && e.target === document.body) {
+        e.preventDefault();
+        console.log('Pause shortcut triggered');
+      } else if (e.code === 'Escape') {
+        console.log('Abort shortcut triggered');
+      }
+    });
+  </script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const errorBanner = document.createElement('div');
+    errorBanner.id = 'error-banner';
+    errorBanner.className = 'hidden fixed top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50 font-label-md';
+    document.body.appendChild(errorBanner);
+
+    function showError(msg) {
+      errorBanner.textContent = msg;
+      errorBanner.classList.remove('hidden');
+      setTimeout(() => errorBanner.classList.add('hidden'), 5000);
+    }
+
+    const projectId = localStorage.getItem('project_id');
+    const personas = JSON.parse(localStorage.getItem('personas') || '[]');
+    const scenarios = JSON.parse(localStorage.getItem('scenarios_run') || '[]');
+
+    if (!projectId || !personas.length || !scenarios.length) {
+      showError('Missing session data. Returning to start.');
+      setTimeout(() => window.location.href = 'index.html', 2000);
+      return;
+    }
+
+    const terminalContainer = document.getElementById('terminal-container');
+    if (terminalContainer) {
+      terminalContainer.innerHTML = ''; // clear mock logs
+      
+      scenarios.forEach((s, idx) => {
+        const persona = personas.find(p => p.id === s.persona_id);
+        const pName = persona ? persona.name : 'Unknown';
+        
+        let colorClass = 'text-neutral-400 hover:bg-neutral-900/60';
+        let issueBadge = '';
+        if (s.status === 'failed') {
+          colorClass = 'bg-neutral-900 border-l-2 border-neutral-200';
+          issueBadge = '<span class="bg-neutral-100 text-neutral-950 px-1 rounded font-bold text-[10px] mr-1.5">ISSUE: FAILED</span>';
+        }
+
+        const dateStr = new Date().toISOString().split('T')[1].slice(0, 12);
+        
+        terminalContainer.innerHTML += `
+          <div class="flex items-start gap-2 ${colorClass} py-0.5 px-1 rounded transition-colors font-mono mb-1">
+            <span class="text-neutral-600 select-none text-[11px]">${dateStr}</span>
+            <span class="px-1.5 py-0.2 rounded bg-neutral-900 text-neutral-300 border border-neutral-800 text-[11px] whitespace-nowrap">Agent: ${pName}</span>
+            <span class="text-neutral-300 flex-1">
+              ${issueBadge}
+              [${s.task_description}] ${s.result_note || ''}
+            </span>
+          </div>
+        `;
+      });
+      // Add pulsing element
+      terminalContainer.innerHTML += `
+        <div class="flex items-start gap-2 text-neutral-300 py-1 px-1 font-mono">
+          <span class="text-neutral-400 flex items-center">
+            Running LLM Analysis engine on test results...
+            <span class="inline-block w-1.5 h-3.5 bg-neutral-200 ml-1.5 animate-pulse"></span>
+          </span>
+        </div>
+      `;
+    }
+
+    // Update tallies
+    const completedCount = scenarios.length;
+    const passedCount = scenarios.filter(s => s.status === 'passed').length;
+    const failedCount = scenarios.filter(s => s.status === 'failed').length;
+
+    // We can just find the big numbers and replace them
+    const statNumbers = Array.from(document.querySelectorAll('.text-3xl.font-bold'));
+    if (statNumbers.length >= 2) {
+      statNumbers[1].innerHTML = `${completedCount} <span class="text-lg text-secondary font-normal">/ ${completedCount}</span>`;
+      statNumbers[2].innerText = personas.length; // Active Agents
+    }
+
+    try {
+      const analyzeRes = await fetch(`/api/project/${projectId}/analyze`, { method: 'POST' });
+      if (!analyzeRes.ok) throw new Error('Failed to run analysis');
+      
+      const analysisData = await analyzeRes.json();
+      localStorage.setItem('analysis_data', JSON.stringify(analysisData));
+      
+      // Navigate to report
+      window.location.href = 'report.html';
+
+    } catch (err) {
+      showError(err.message);
+    }
+  });
+</script>
+</body>
+</html>

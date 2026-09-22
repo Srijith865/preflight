@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PreFlight — Automated QA &amp; Pre-launch Testing</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed": "#1b1b1b",
+            "surface-container-highest": "#dce2f3",
+            "on-tertiary-fixed-variant": "#474747",
+            "secondary-container": "#d9dff5",
+            "on-surface": "#151c27",
+            "outline-variant": "#cfc4c5",
+            "tertiary-container": "#1b1b1b",
+            "inverse-on-surface": "#ebf1ff",
+            "on-tertiary-container": "#848484",
+            "surface-container": "#e7eefe",
+            "surface-container-low": "#f0f3ff",
+            "on-primary-container": "#848484",
+            "primary-container": "#1b1b1b",
+            "surface-bright": "#f9f9ff",
+            "surface-dim": "#d3daea",
+            "on-surface-variant": "#4c4546",
+            "outline": "#7e7576",
+            "on-secondary-fixed-variant": "#404758",
+            "tertiary-fixed": "#e2e2e2",
+            "on-secondary": "#ffffff",
+            "primary": "#000000",
+            "background": "#f9f9ff",
+            "surface-container-lowest": "#ffffff",
+            "on-error-container": "#93000a",
+            "secondary": "#575e70",
+            "on-secondary-fixed": "#141b2b",
+            "on-background": "#151c27",
+            "on-secondary-container": "#5c6274",
+            "tertiary": "#000000",
+            "inverse-surface": "#2a313d",
+            "surface-tint": "#5e5e5e",
+            "tertiary-fixed-dim": "#c6c6c6",
+            "on-primary-fixed-variant": "#474747",
+            "on-primary": "#ffffff",
+            "primary-fixed": "#e2e2e2",
+            "error-container": "#ffdad6",
+            "surface-container-high": "#e2e8f8",
+            "on-error": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-fixed": "#1b1b1b",
+            "primary-fixed-dim": "#c6c6c6",
+            "surface-variant": "#dce2f3",
+            "secondary-fixed-dim": "#c0c6db",
+            "inverse-primary": "#c6c6c6",
+            "error": "#ba1a1a",
+            "secondary-fixed": "#dce2f7",
+            "surface": "#f9f9ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-md": "0.75rem",
+            "space-xs": "0.25rem",
+            "gutter": "1rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "margin": "1.5rem",
+            "space-lg": "1.25rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-xl": ["Inter"],
+            "headline-lg": ["Inter"],
+            "code-sm": ["JetBrains Mono"],
+            "headline-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-md": ["Inter"]
+          },
+          "fontSize": {
+            "body-lg": ["15px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "code-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 16px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 1px #000000;
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-primary antialiased min-h-screen flex flex-col justify-between selection:bg-primary selection:text-surface-container-lowest">
+<!-- TopNavBar (Shared Component) -->
+<header class="w-full h-12 px-space-xl flex items-center justify-between border-b border-outline-variant bg-surface-container-lowest docked full-width top-0 sticky z-40">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<a class="text-headline-sm font-headline-sm tracking-tight font-semibold text-primary" href="#">PreFlight</a>
+<span class="font-code-sm text-code-sm text-secondary bg-surface-container-low px-1.5 py-0.5 rounded border border-outline-variant">v1.4</span>
+</div>
+<div class="h-4 w-px bg-outline-variant ml-space-xs mr-space-xs hidden md:block"></div>
+<!-- Search bar 'on_left' -->
+<div class="hidden md:flex items-center gap-1.5 px-2 py-1 bg-surface-container-low border border-outline-variant rounded text-secondary hover:text-primary transition-colors cursor-pointer w-48">
+<span class="material-symbols-outlined text-secondary" style="font-size: 14px;">search</span>
+<span class="font-label-sm text-label-sm text-secondary">Search workflows...</span>
+<kbd class="ml-auto font-code-sm text-[10px] text-secondary bg-surface-container-lowest px-1 border border-outline-variant rounded">⌘K</kbd>
+</div>
+</div>
+<!-- Center Navigation Links -->
+<nav class="hidden md:flex items-center gap-space-lg h-full">
+<a class="text-primary font-medium border-b-2 border-primary pb-3.5 pt-3.5 font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-secondary hover:text-primary pb-3.5 pt-3.5 transition-colors font-label-md text-label-md" href="#">Docs</a>
+<a class="text-secondary hover:text-primary pb-3.5 pt-3.5 transition-colors font-label-md text-label-md" href="#">Settings</a>
+</nav>
+<!-- Trailing Actions Cluster -->
+<div class="flex items-center gap-space-md">
+<!-- Trailing Secondary: Status Online -->
+<div class="hidden sm:flex items-center gap-1.5 px-2 py-0.5 border border-outline-variant rounded font-code-sm text-[11px] text-primary">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span>Status: Online</span>
+</div>
+<!-- Icon actions: terminal, notifications -->
+<div class="flex items-center gap-1">
+<button class="p-1.5 text-secondary hover:text-primary hover:bg-surface-container-low rounded transition-colors active:scale-[0.99]" title="Terminal session">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+<button class="p-1.5 text-secondary hover:text-primary hover:bg-surface-container-low rounded transition-colors active:scale-[0.99]" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+<!-- Trailing Primary Action: Deploy Check -->
+<button class="hidden lg:inline-flex items-center gap-1 bg-primary text-on-primary font-label-sm text-label-sm px-2.5 py-1 rounded active:scale-[0.99] transition-transform">
+<span>Deploy Check</span>
+</button>
+<!-- Profile Avatar -->
+<div aria-label="User workspace profile avatar" class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-code-sm text-[10px] font-semibold tracking-tighter">
+        PF
+      </div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 w-full max-w-2xl mx-auto px-space-md py-space-xl flex flex-col justify-center">
+<!-- Header Area -->
+<div class="text-center mb-space-xl">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 mb-space-md border border-outline-variant rounded bg-surface-container-lowest text-secondary font-label-sm text-label-sm">
+<span class="font-code-sm text-[9px] font-bold">●</span>
+<span>PRE-LAUNCH AGENTS</span>
+</div>
+<h1 class="text-headline-xl font-headline-xl tracking-tight text-primary mb-space-xs font-semibold">
+        Test your app before real users do
+      </h1>
+<p class="text-body-md font-body-md text-secondary max-w-lg mx-auto">
+        Paste your URL and describe your key flows — AI users will do the rest
+      </p>
+</div>
+<!-- Test Configuration Card -->
+<div class="border border-outline-variant rounded-lg bg-surface-container-lowest shadow-sm mb-space-xl">
+<div class="p-space-lg space-y-space-lg">
+<!-- Field 1: Project URL -->
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="font-label-md text-label-md text-primary font-medium" for="target-url">Project URL</label>
+<span class="font-code-sm text-[11px] text-secondary">HTTP / Staging / Localhost</span>
+</div>
+<div class="relative flex items-center">
+<span class="absolute left-2.5 font-code-sm text-secondary select-none text-code-sm">https://</span>
+<input class="w-full h-8 pl-16 pr-3 border border-outline-variant rounded text-body-sm font-code-sm text-primary placeholder:text-outline focus:border-primary transition-colors bg-surface-container-lowest" id="target-url" placeholder="yourapp.com" type="text" value="staging.preflight.run"/>
+</div>
+</div>
+<!-- Field 2: Key Flows -->
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="font-label-md text-label-md text-primary font-medium" for="user-flows">Describe key user flows</label>
+<span class="font-label-sm text-label-sm text-secondary">Natural language QA script</span>
+</div>
+<textarea class="w-full p-2.5 border border-outline-variant rounded text-body-sm font-body-sm text-primary placeholder:text-outline focus:border-primary transition-colors bg-surface-container-lowest resize-none" id="user-flows" placeholder="e.g. sign up, add to cart, checkout" rows="3">Navigate to /pricing, click 'Get Started' on Enterprise plan, fill company size '50+', verify sandbox invite token gets injected into OAuth modal.</textarea>
+<!-- Helper Pills / Quick Injections -->
+<div class="flex flex-wrap items-center gap-1.5 mt-2">
+<span class="font-label-sm text-[10px] text-secondary">Inject scenario:</span>
+<button class="font-code-sm text-[11px] px-2 py-0.5 border border-outline-variant rounded hover:bg-surface-container-low text-secondary hover:text-primary transition-colors active:scale-[0.99]" type="button">
+              + Auth flow
+            </button>
+<button class="font-code-sm text-[11px] px-2 py-0.5 border border-outline-variant rounded hover:bg-surface-container-low text-secondary hover:text-primary transition-colors active:scale-[0.99]" type="button">
+              + Checkout flow
+            </button>
+<button class="font-code-sm text-[11px] px-2 py-0.5 border border-outline-variant rounded hover:bg-surface-container-low text-secondary hover:text-primary transition-colors active:scale-[0.99]" type="button">
+              + Edge case testing
+            </button>
+</div>
+</div>
+<!-- Advanced Parameters (Collapsible or visible toggle panel) -->
+<div class="pt-2 border-t border-outline-variant">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-secondary">Concurrent AI agents:</span>
+<span class="font-code-sm text-code-sm bg-surface-container-low px-1.5 py-0.5 border border-outline-variant rounded text-primary">10 virtual peers</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-secondary">Viewport:</span>
+<div class="inline-flex border border-outline-variant rounded overflow-hidden p-0.5 bg-surface-container-low">
+<span class="px-2 py-0.5 font-label-sm text-[11px] bg-surface-container-lowest text-primary font-medium rounded shadow-xs">Desktop</span>
+<span class="px-2 py-0.5 font-label-sm text-[11px] text-secondary">Mobile</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card Action Footer -->
+<div class="px-space-lg py-space-sm bg-surface-container-low border-t border-outline-variant flex items-center justify-between rounded-b-lg">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[15px]" style="font-size: 15px;">info</span>
+<span class="font-label-sm text-label-sm">Estimated simulation time: 42s</span>
+</div>
+<button class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary text-on-primary font-label-md text-label-md rounded hover:bg-neutral-900 active:scale-[0.99] transition-all shadow-sm">
+<span>Start Test Run</span>
+<kbd class="font-code-sm text-[10px] bg-neutral-800 text-neutral-300 px-1.5 py-0.5 rounded border border-neutral-700">⌘ + ↵</kbd>
+</button>
+</div>
+</div>
+<!-- Recent Runs / Subtle Verification Log -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between px-1 mb-1">
+<span class="font-label-sm text-label-sm text-secondary tracking-wider uppercase font-semibold">Recent Preflight Runs</span>
+<a class="font-code-sm text-[11px] text-secondary hover:text-primary underline transition-colors" href="#">View telemetry</a>
+</div>
+<!-- Run Item 1 -->
+<div class="flex items-center justify-between px-space-md py-2 border border-outline-variant rounded bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-2.5">
+<span class="font-code-sm text-[10px] text-primary">●</span>
+<span class="font-code-sm text-code-sm font-medium text-primary">staging.acme.corp</span>
+<span class="text-secondary font-body-sm text-body-sm">•</span>
+<span class="font-body-sm text-body-sm text-secondary">14 scenarios passed</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-code-sm text-[11px] text-secondary">2m ago</span>
+<span class="font-code-sm text-[10px] border border-outline-variant bg-surface-container-low text-primary px-1.5 py-0.5 rounded font-medium">PASSED</span>
+</div>
+</div>
+<!-- Run Item 2 -->
+<div class="flex items-center justify-between px-space-md py-2 border border-outline-variant rounded bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-2.5">
+<span class="font-code-sm text-[10px] text-secondary">○</span>
+<span class="font-code-sm text-code-sm font-medium text-primary">app.hyperline.io</span>
+<span class="text-secondary font-body-sm text-body-sm">•</span>
+<span class="font-body-sm text-body-sm text-secondary">1 anomaly detected (DOM race condition)</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-code-sm text-[11px] text-secondary">1h ago</span>
+<span class="font-code-sm text-[10px] border border-primary bg-primary text-on-primary px-1.5 py-0.5 rounded font-medium">FLAGGED</span>
+</div>
+</div>
+<!-- Run Item 3 -->
+<div class="flex items-center justify-between px-space-md py-2 border border-outline-variant rounded bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-2.5">
+<span class="font-code-sm text-[10px] text-primary">●</span>
+<span class="font-code-sm text-code-sm font-medium text-primary">checkout.zenith.dev</span>
+<span class="text-secondary font-body-sm text-body-sm">•</span>
+<span class="font-body-sm text-body-sm text-secondary">8 scenarios passed</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-code-sm text-[11px] text-secondary">3h ago</span>
+<span class="font-code-sm text-[10px] border border-outline-variant bg-surface-container-low text-primary px-1.5 py-0.5 rounded font-medium">PASSED</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full px-space-xl py-space-md flex flex-col md:flex-row items-center justify-between text-label-sm font-label-sm border-t border-outline-variant bg-surface-container-lowest docked full-width bottom mt-space-xl">
+<div class="flex items-center gap-space-sm text-secondary mb-2 md:mb-0">
+<span class="text-label-sm font-label-sm font-semibold text-primary">PreFlight</span>
+<span>© 2025 PreFlight Systems Inc. Calibrated for production agility.</span>
+</div>
+<div class="flex items-center gap-space-lg text-secondary">
+<a class="text-secondary hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="text-secondary hover:text-primary transition-colors" href="#">API Reference</a>
+<a class="text-secondary hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Status: Systems Operational</span>
+</a>
+<a class="text-secondary hover:text-primary transition-colors font-code-sm text-code-sm" href="#">Keyboard Shortcuts [?]</a>
+</div>
+</footer>
+</body></html>
