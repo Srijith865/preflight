@@ -589,7 +589,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     const analysisDataRaw = localStorage.getItem('analysis_data');
     if (!analysisDataRaw) {
-      window.location.href = 'index.html';
+      window.location.href = 'app.html';
       return;
     }
     
@@ -654,7 +654,7 @@
     if (rerunBtn) {
       rerunBtn.addEventListener('click', () => {
         localStorage.clear();
-        window.location.href = 'index.html';
+        window.location.href = 'app.html';
       });
     }
   });
